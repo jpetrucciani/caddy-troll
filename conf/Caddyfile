@@ -1,0 +1,37 @@
+{
+        http_port 6666
+        https_port 6667
+        auto_https off
+}
+
+http://localhost:6666 {
+        route / {
+                respond "test"
+        }
+        route /random_server_header {
+                troll
+        }
+        route /not_random_server_header {
+                troll {
+                        disable_random_server_header
+                }
+        }
+        route /only_gzip {
+                troll {
+                        disable_xmls
+                        disable_redirects
+                }
+        }
+        route /only_redirect {
+                troll {
+                        disable_gzips
+                        disable_xmls
+                }
+        }
+        route /only_xml {
+                troll {
+                        disable_gzips
+                        disable_redirects
+                }
+        }
+}

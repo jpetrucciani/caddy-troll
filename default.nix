@@ -1,16 +1,14 @@
 { jacobi ? import
     (
       fetchTarball {
-        name = "jpetrucciani-2022-10-03";
-        url = "https://github.com/jpetrucciani/nix/archive/e11675e2d2a1484780beacd6c910e0ee5118133a.tar.gz";
-        sha256 = "15fdp5jjc776d36yx5h8g6vcfq89yx3zjp3x8pccd4hpb669g60s";
+        name = "jpetrucciani-2022-10-04";
+        url = "https://github.com/jpetrucciani/nix/archive/05cf540fbb9784c4ebec45190073efaf82e45fd7.tar.gz";
+        sha256 = "19qp5rd1360j9vhkk86xjwcy6j45qik4nxgy61cl2m4591fkjwl7";
       }
     )
     { }
 }:
 let
-  inherit (jacobi.hax) ifIsLinux ifIsDarwin;
-
   name = "caddy-troll";
   tools = with jacobi; {
     cli = [
@@ -19,6 +17,16 @@ let
     go = [
       go_1_19
       go-tools
+      gopls
+    ];
+    scripts = [
+      xcaddy
+      (jacobi.pog {
+        name = "run-troll";
+        script = h: with h; ''
+          ${xcaddy}/bin/xcaddy run --config ./conf/Caddyfile --watch
+        '';
+      })
     ];
   };
 
