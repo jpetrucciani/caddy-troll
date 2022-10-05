@@ -10,25 +10,38 @@
 }:
 let
   name = "caddy-troll";
-  tools = with jacobi; {
-    cli = [
-      nixpkgs-fmt
-    ];
-    go = [
-      go_1_19
-      go-tools
-      gopls
-    ];
-    scripts = [
-      xcaddy
-      (jacobi.pog {
+  tools = with jacobi;
+    let
+      run-troll = pog {
         name = "run-troll";
+        description = "run caddy with the troll plugin in watch mode against the caddyfile in the conf dir";
         script = h: with h; ''
-          ${xcaddy}/bin/xcaddy run --config ./conf/Caddyfile --watch
+          ${xcaddy}/bin/xcaddy run --config ./conf/Caddyfile --watch "$@"
         '';
-      })
-    ];
-  };
+      };
+      run = pog {
+        name = "run";
+        description = "run run-troll, restarting when go files are changed";
+        script = h: with h; ''
+          ${watchexec}/bin/watchexec -r -e go -- ${run-troll}/bin/run-troll
+        '';
+      };
+    in
+    {
+      cli = [
+        nixpkgs-fmt
+      ];
+      go = [
+        go_1_19
+        go-tools
+        gopls
+      ];
+      scripts = [
+        xcaddy
+        run-troll
+        run
+      ];
+    };
 
   env = jacobi.enviro {
     inherit name tools;

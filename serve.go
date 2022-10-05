@@ -83,8 +83,8 @@ func (b Troll) ServeHTTP(res http.ResponseWriter, req *http.Request, next caddyh
 
 	// RedirectRickRoll(b, res, req)
 	// GzipSmall(b, res, req)
-	// XMLBomb(b, res, req)
-	GzipBomb(b, res, req)
+	XMLBomb(b, res, req)
+	// GzipBomb(b, res, req)
 	// RedirectSelf(b, res, req)
 	return next.ServeHTTP(res, req)
 }
