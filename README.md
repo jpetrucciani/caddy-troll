@@ -42,3 +42,7 @@ Disables other hacks so only the redirect hack is applied
 ### `localhost:6666/only_xml`:
 
 Disables other hacks so only the xml hack is applied
+
+### `localhost:6666/only_naughty`:
+
+Disables other hacks so only the naughty strings hack is applied

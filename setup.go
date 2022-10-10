@@ -29,6 +29,7 @@ type Troll struct {
 	DisableGzips              bool `json:"disable_gzips"`
 	DisableXmls               bool `json:"disable_xmls"`
 	DisableRandomServerHeader bool `json:"disable_random_server_header"`
+	DisableNaughtyStrings     bool `json:"disable_naughty_strings"`
 
 	// globals
 	gzipBomb      []byte
@@ -57,6 +58,8 @@ func (b *Troll) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 			b.DisableXmls = true
 		case "disable_random_server_header":
 			b.DisableRandomServerHeader = true
+		case "disable_naughty_strings":
+			b.DisableNaughtyStrings = true
 		default:
 			err = d.Errf("not a valid troll option")
 		}

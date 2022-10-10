@@ -20,18 +20,28 @@ http://localhost:6666 {
                 troll {
                         disable_xmls
                         disable_redirects
+                        disable_naughty_strings
                 }
         }
         route /only_redirect {
                 troll {
                         disable_gzips
                         disable_xmls
+                        disable_naughty_strings
                 }
         }
         route /only_xml {
                 troll {
                         disable_gzips
                         disable_redirects
+                        disable_naughty_strings
+                }
+        }
+        route /only_naughty {
+                troll {
+                        disable_redirects
+                        disable_gzips
+                        disable_xmls
                 }
         }
 }
