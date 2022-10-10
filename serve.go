@@ -93,12 +93,31 @@ func (b Troll) ServeHTTP(res http.ResponseWriter, req *http.Request, next caddyh
 		zap.String("user-agent", req.Header.Get("User-Agent")),
 	)
 
-	RandomServerHeader(b, res, req)
+	functions := []func(b Troll, res http.ResponseWriter, req *http.Request){}
 
-	// RedirectRickRoll(b, res, req)
-	// GzipSmall(b, res, req)
-	XMLBomb(b, res, req)
-	// GzipBomb(b, res, req)
-	// RedirectSelf(b, res, req)
+	if (!b.DisableRedirects) {
+		functions = append(functions, RedirectLocalhost)
+		functions = append(functions, RedirectSelf)
+		functions = append(functions, RedirectRickRoll)
+	}
+
+	if (!b.DisableGzips) {
+		functions = append(functions, GzipSmall)
+		functions = append(functions, GzipLarge)
+		functions = append(functions, GzipBomb)
+	}
+
+	if (!b.DisableXmls) {
+		functions = append(functions, XMLBomb)
+	}
+
+	if (!b.DisableRandomServerHeader) {
+		functions = append(functions, RandomServerHeader)
+	}
+
+	randomIndex := rand.Intn(len(functions))
+	randomFunction := functions[randomIndex]
+	randomFunction(b, res, req)
+
 	return next.ServeHTTP(res, req)
 }
