@@ -1,6 +1,9 @@
 package troll
 
 import (
+	"os"
+	"encoding/json"
+	"io/ioutil"
 	"math/rand"
 	"net/http"
 
@@ -48,6 +51,23 @@ func RedirectSelf(b Troll, res http.ResponseWriter, req *http.Request) {
 
 func RedirectRickRoll(b Troll, res http.ResponseWriter, req *http.Request) {
 	_redirect(b, res, req, "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+}
+
+func NaughtyResponse(b Troll, res http.ResponseWriter, req *http.Request) {
+	if (b.DisableNaughtyStrings) {
+		return;
+	}
+
+	jsonFile, _ := os.Open("blns.json")
+	defer jsonFile.Close()
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+
+	var result []string
+	json.Unmarshal([]byte(byteValue), &result)
+	randomIndex := rand.Intn(len(result))
+
+	res.Header().Set("Content-Type", "text/html")
+	res.Write([]byte(result[randomIndex]))
 }
 
 func XMLBomb(b Troll, res http.ResponseWriter, req *http.Request) {
@@ -113,6 +133,10 @@ func (b Troll) ServeHTTP(res http.ResponseWriter, req *http.Request, next caddyh
 
 	if (!b.DisableRandomServerHeader) {
 		functions = append(functions, RandomServerHeader)
+	}
+
+	if (!b.DisableNaughtyStrings) {
+		functions = append(functions, NaughtyResponse)
 	}
 
 	randomIndex := rand.Intn(len(functions))
