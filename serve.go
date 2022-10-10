@@ -67,8 +67,22 @@ func GzipBomb(b Troll, res http.ResponseWriter, req *http.Request) {
 	res.Write(b.gzipBomb)
 }
 
+var serverHeaders = []string{
+	"Apache/2.4.1 (Unix)",
+	"nginx",
+	"cloudflare",
+	"Akamai Resource Optimizer",
+	"proxygen-bolt",
+	"ATS",
+}
+
 func RandomServerHeader(b Troll, res http.ResponseWriter, req *http.Request) {
-	res.Header().Set("Server", "nginx")
+	if (b.DisableRandomServerHeader) {
+		res.Header().Set("Server", "Caddy")
+	} else {
+    randomIndex := rand.Intn(len(serverHeaders))
+		res.Header().Set("Server", serverHeaders[randomIndex])
+	}
 }
 
 func (b Troll) ServeHTTP(res http.ResponseWriter, req *http.Request, next caddyhttp.Handler) error {
