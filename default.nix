@@ -23,8 +23,8 @@ let
         name = "run";
         description = "run run-troll, restarting when go files are changed";
         script = h: with h; ''
-          wget -nc -q "https://raw.githubusercontent.com/minimaxir/big-list-of-naughty-strings/master/blns.json"
-          ${watchexec}/bin/watchexec -r -e go -- ${run-troll}/bin/run-troll
+          # wget -nc -q "https://raw.githubusercontent.com/minimaxir/big-list-of-naughty-strings/master/blns.json"
+          ${findutils}/bin/find . -iname '*.go' | ${entr}/bin/entr -rz ${run-troll}/bin/run-troll
         '';
       };
     in
