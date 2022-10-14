@@ -2,11 +2,11 @@
 
 [![built in go](https://img.shields.io/badge/built%20in-go-%2301ADD8)](https://go.dev/)
 
-Caddy troll is
+`caddy-troll` is a caddy v2 plugin that allows you to mess with people who may be scanning your server for vulnerabilities. It allows you to send back malformed/confusing responses, spoof your server headers, redirect randomly, and even send back responses that may crash naive clients! **Use at your own risk!**
 
 # Installation
 
-This repo uses [Nix](https://nixos.org/download.html) + [Direnv](https://direnv.net/) to easily and automatically install and run the project. Once both are installed, run `direnv allow` in the root of the project to install all the required dependencies.
+This repo uses [nix](https://nixos.org/download.html) + [direnv](https://direnv.net/) to easily and automatically install dependencies and run caddy with this plugin enabled in an easy way. Once both nix and direnv are installed, run `direnv allow` in the root of the project to install all the required dependencies.
 
 # Building
 
