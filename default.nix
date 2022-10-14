@@ -1,9 +1,9 @@
 { jacobi ? import
     (
       fetchTarball {
-        name = "jpetrucciani-2022-10-04";
-        url = "https://github.com/jpetrucciani/nix/archive/05cf540fbb9784c4ebec45190073efaf82e45fd7.tar.gz";
-        sha256 = "19qp5rd1360j9vhkk86xjwcy6j45qik4nxgy61cl2m4591fkjwl7";
+        name = "jpetrucciani-2022-10-11";
+        url = "https://github.com/jpetrucciani/nix/archive/4d57dd53857d172cea6f52dce7c5bec425db4550.tar.gz";
+        sha256 = "0zlg2inn2nizsfazxwcbrmjkrmryf924pk5r568cln3rwkg6081l";
       }
     )
     { }

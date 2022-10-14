@@ -2,16 +2,42 @@
 
 [![built in go](https://img.shields.io/badge/built%20in-go-%2301ADD8)](https://go.dev/)
 
+Caddy troll is
+
 # Installation
 
 This repo uses [Nix](https://nixos.org/download.html) + [Direnv](https://direnv.net/) to easily and automatically install and run the project. Once both are installed, run `direnv allow` in the root of the project to install all the required dependencies.
+
+# Building
+
+Use [xcaddy](https://github.com/caddyserver/xcaddy) to build, or use nix!
+
+## xcaddy example:
+
+```bash
+xcaddy build --output ./caddy --with github.com/jpetrucciani/caddy-troll@main
+```
+
+## nix example:
+
+caddy with caddy-troll already included:
+
+```nix
+TODO
+```
+
+build your own!
+
+```nix
+TODO
+```
 
 # How to run
 
 There are two ways to run the project.
 
+1. The `run` command which will rebuild the go caddy plugin when files are changed as well as run the `run-troll` command.
 1. The `run-troll` command which will run Caddy in watch mode on the Caddyfile in the conf directory.
-2. The `run` command which will rebuild the go caddy plugin when files are changed as well as run the `run-troll` command.
 
 ## Current Hacks
 
