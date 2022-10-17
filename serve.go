@@ -135,9 +135,9 @@ func (b Troll) ServeHTTP(res http.ResponseWriter, req *http.Request, next caddyh
 		functions = append(functions, RandomServerHeader)
 	}
 
-	if (!b.DisableNaughtyStrings) {
-		functions = append(functions, NaughtyResponse)
-	}
+	// if (!b.DisableNaughtyStrings) {
+	// 	functions = append(functions, NaughtyResponse)
+	// }
 
 	randomIndex := rand.Intn(len(functions))
 	randomFunction := functions[randomIndex]
