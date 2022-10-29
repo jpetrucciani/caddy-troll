@@ -1,11 +1,9 @@
 { jacobi ? import
-    (
-      fetchTarball {
-        name = "jpetrucciani-2022-10-11";
-        url = "https://github.com/jpetrucciani/nix/archive/4d57dd53857d172cea6f52dce7c5bec425db4550.tar.gz";
-        sha256 = "0zlg2inn2nizsfazxwcbrmjkrmryf924pk5r568cln3rwkg6081l";
-      }
-    )
+    (fetchTarball {
+      name = "jpetrucciani-2022-10-29";
+      url = "https://nix.cobi.dev/x/226c57d8dceeb0556b5405ccc674f24e2c97307b";
+      sha256 = "068i7zpvgk9lydbhksyqr58vildjwmp01rhvd2r9fh61sbplpbmj";
+    })
     { }
 }:
 let
@@ -41,6 +39,10 @@ let
         xcaddy
         run-troll
         run
+        (writeShellScriptBin "test_actions" ''
+          export DOCKER_HOST=$(${jacobi.docker-client}/bin/docker context inspect --format '{{.Endpoints.docker.Host}}')
+          ${jacobi.act}/bin/act --container-architecture linux/amd64 -r --rm
+        '')
       ];
     };
 

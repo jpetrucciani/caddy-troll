@@ -1,11 +1,11 @@
 package troll
 
 import (
-	"os"
 	"encoding/json"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
+	"os"
 
 	"github.com/caddyserver/caddy/v2/modules/caddyhttp"
 	"go.uber.org/zap"
@@ -54,8 +54,8 @@ func RedirectRickRoll(b Troll, res http.ResponseWriter, req *http.Request) {
 }
 
 func NaughtyResponse(b Troll, res http.ResponseWriter, req *http.Request) {
-	if (b.DisableNaughtyStrings) {
-		return;
+	if b.DisableNaughtyStrings {
+		return
 	}
 
 	jsonFile, _ := os.Open("blns.json")
@@ -97,10 +97,10 @@ var serverHeaders = []string{
 }
 
 func RandomServerHeader(b Troll, res http.ResponseWriter, req *http.Request) {
-	if (b.DisableRandomServerHeader) {
+	if b.DisableRandomServerHeader {
 		res.Header().Set("Server", "Caddy")
 	} else {
-    randomIndex := rand.Intn(len(serverHeaders))
+		randomIndex := rand.Intn(len(serverHeaders))
 		res.Header().Set("Server", serverHeaders[randomIndex])
 	}
 }
@@ -115,23 +115,23 @@ func (b Troll) ServeHTTP(res http.ResponseWriter, req *http.Request, next caddyh
 
 	functions := []func(b Troll, res http.ResponseWriter, req *http.Request){}
 
-	if (!b.DisableRedirects) {
+	if !b.DisableRedirects {
 		functions = append(functions, RedirectLocalhost)
 		functions = append(functions, RedirectSelf)
 		functions = append(functions, RedirectRickRoll)
 	}
 
-	if (!b.DisableGzips) {
+	if !b.DisableGzips {
 		functions = append(functions, GzipSmall)
 		functions = append(functions, GzipLarge)
 		functions = append(functions, GzipBomb)
 	}
 
-	if (!b.DisableXmls) {
+	if !b.DisableXmls {
 		functions = append(functions, XMLBomb)
 	}
 
-	if (!b.DisableRandomServerHeader) {
+	if !b.DisableRandomServerHeader {
 		functions = append(functions, RandomServerHeader)
 	}
 

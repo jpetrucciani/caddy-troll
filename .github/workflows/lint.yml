@@ -1,0 +1,21 @@
+name: lint
+
+on:
+  push: {branches: [main]}
+  pull_request: {branches: [main]}
+  workflow_dispatch:
+
+jobs:
+  gofmt:
+    name: gofmt
+    runs-on: ubuntu-latest
+    container: golang:1.19
+    steps:
+      - uses: actions/checkout@v3
+      - run: gofmt -s -l -d .
+  staticcheck:
+    name: staticcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dominikh/staticcheck-action@v1.2.0
