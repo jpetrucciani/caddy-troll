@@ -2,7 +2,7 @@ package troll
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"math/rand"
 	"net/http"
 	"os"
@@ -38,7 +38,7 @@ func _redirect(b Troll, res http.ResponseWriter, req *http.Request, location str
 	if req.URL.Scheme == "" {
 		req.URL.Scheme = "http"
 	}
-	http.Redirect(res, req, req.URL.String(), 301)
+	http.Redirect(res, req, req.URL.String(), http.StatusMovedPermanently)
 }
 
 func RedirectLocalhost(b Troll, res http.ResponseWriter, req *http.Request) {
@@ -60,7 +60,7 @@ func NaughtyResponse(b Troll, res http.ResponseWriter, req *http.Request) {
 
 	jsonFile, _ := os.Open("blns.json")
 	defer jsonFile.Close()
-	byteValue, _ := ioutil.ReadAll(jsonFile)
+	byteValue, _ := io.ReadAll(jsonFile)
 
 	var result []string
 	json.Unmarshal([]byte(byteValue), &result)
